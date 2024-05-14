@@ -27,3 +27,7 @@
 #define LCD_ROWS 4
 #define LCD_COLS 20
 
+#define thermoDO 2
+#define thermoCS 3
+#define thermoCLK 4
+

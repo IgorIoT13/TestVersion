@@ -16,14 +16,14 @@ typedef struct MData{
     String text;
     int valuer;
 
-    Line* line;
-    Menu* line;
+//    Line* line;
+//    Menu* line;
 
-    mdata* next;
-    mdata* prev;
+//    mdata* next;
+//    mdata* prev;
 
-    String (*getString) (mdata* data);
-    void (*NewLine) (mdata* data, String name, String text, int val);
+//    String (*getString) (mdata* data);
+//    void (*NewLine) (mdata* data, String name, String text, int val);
 
 } Mdata, mdata, MDATA, MData;
 
@@ -34,10 +34,10 @@ void createNewLineData(mdata* data, String name, String text, int val);
 MData* initMData(Menu* menu, String name, String text, int val){
     Mdata* obj = new Mdata;
 
-    if(obj){
-        obj->getString = getString;
-        obj->NewLine = createNewLineData;
-    }
+//    if(obj){
+//        obj->getString = getString;
+//        obj->NewLine = createNewLineData;
+//    }
 
 }
 

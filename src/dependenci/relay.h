@@ -31,6 +31,7 @@ void relay_handler1(){
     RelayState1 =! RelayState1;
     digitalWrite(REL1, RelayState1);
     changeRelayState1 = false;
+    HEAT = true;
   }
 }
 
@@ -39,6 +40,7 @@ void relay_handler2(){
     RelayState2 != RelayState2;
     digitalWrite(REL2, RelayState2);
     changeRelayState2 = false;
+    COLD = true;
   }
 }
 
