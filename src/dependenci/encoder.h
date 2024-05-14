@@ -1,18 +1,11 @@
 #include <Arduino.h>
 #include <EncButton.h>
-#include <PIDController.h>
 #include "dallas_sensor.h"
 
-
 EncButton en(CLK, DT, SW);
-PIDController pid;
 
-int set_temperature = 1;
-int clockPin; 
-int clockPinState;
 float debounce = 0;
 int encoder_btn_count = 0;
-float temperature_value_c = 0.0;
 
 
 void encoder_setup(){
@@ -34,7 +27,6 @@ int read_encoder(){
     if(en.rightH() && en.press()){
       return 0x02;
     }
-
     if (en.leftH()) {
         return 0x03; 
     }
@@ -54,10 +46,7 @@ void encoder_loop(){
   en.tick();
   read_encoder(); 
   if (encoder_btn_count == 1) { 
-    temperature_value_c = readNTC(); 
-    int output = pid.compute(temperature_value_c);   
-    analogWrite(mosfet_pin, output);           
-    pid.setpoint(set_temperature); 
+  
 
   }
 }

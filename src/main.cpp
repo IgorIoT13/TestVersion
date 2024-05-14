@@ -44,9 +44,6 @@ void loop(void) {
 
   if(encderVal){
     switch (encderVal){
-    case 0x01:
-        menu->prevLine(menu);
-    break;
 
     case 0x02:
         menu->nextLine(menu);
