@@ -1,99 +1,74 @@
 #include <Arduino.h>
 #include <Menulib.h>
-#include <iostream>
-#include <string>
+
 
 #include "dependenci/pins.h"
 #include "dependenci/btns.h"
-#include "dependenci/dallas_sensor.h"
+// #include "dependenci/dallas_sensor.h"
 #include "dependenci/led.h"
-#include "dependenci/menuControl/menu.h"
+#include "dependenci/menu.h"
 #include "dependenci/encoder.h"
 
 int encderVal = 0x00;
-String namer;
-Line* currL;
-String currS, currR;
-int* currI;
-String fan, ten, col;
-int fani, teni, coli;
-String fanR, tenR, colR;
+Menu* menu ;
 
-void setup(void) {
-
+Storage* storage ;
+void setup() {
+    Serial.begin(9600);
     menu = initMenu();
-    testScreen = menu->newScreen(menu, "Setting", "Test");
 
-    fan = "FAN: ";
-    ten = "TEN: ";
-    col = "CO0L: ";
+    menu->newScreen(menu, "Settings", "Settings");
+    
+    menu->addLine(menu, "Fan :", "FAN");
+    menu->addLine(menu, "Ten :", "TEN");
+    menu->addLine(menu, "Cool :", "COOL");
+
+    storage = initStore();
 
 
 
-    Fan  =  menu->addLine(menu, "FAN 60%", "FAN");
-    Ten  =  menu->addLine(menu, "TEN 42%", "TEN");
-    Cool =  menu->addLine(menu, "COOL 100%", "COOL");
+    storage->inStore(menu->currentScreen, storage);
 
-  // buttons_setup();
-   encoder_setup();
-  // relay_setup();'
+
+    // buttons_setup();
+    // encoder_setup();
+    // relay_setup();
   
 }
 
-void loop(void) {
+void loop() {
 
-  if(encderVal){
-    switch (encderVal){
-    case 0x01:
-        menu->prevLine(menu);
-    break;
-
-    case 0x02:
-        menu->nextLine(menu);
-    break;
-
-    case 0x03:
-        namer = menu->getName(menu);
-        if(namer == "FAN"){
-            currL = Fan;
-            currS = fan;
-            currI = &fani;
-
-        }else if(namer == "TEN"){
-            currL = Ten;
-            currS = ten;
-            currI = &teni;
-        }else{
-            currL = Cool;
-            currS = col;
-            currI = &coli;
-        }
-
-        while (encderVal != 0x04){
-            encderVal = read_encoder();
-            switch (encderVal){
-                case 0x01:
-                    currI --;
-                break;
-
-                case 0x02:
-                    currI ++;
-                break;
-
-                default:
-                break;
-            }
-            currR = currS ;
-            currR += String(*currI);
-            currL->content = currR;
-        }
-        
-        
-    break;
     
-    default:
-      break;
-    }
-  }
+    delay(1000);
+
+    menu->nextLine(menu);
+    // delay(1000);
+    String var = menu->getName(menu);
+    Liner* lin = storage->finder(storage, menu->getName(menu));
+
+    // delay(1000);
+    lin->val ++;
+
+    storage->allUp(storage);
+    // delay(1000);
+
+
+//   if(encderVal){
+//     switch (encderVal){
+//     case 0x01:
+//     break;
+
+//     case 0x02:
+//     break;
+
+//     case 0x03:
+        
+//     break;
+    
+//     default:
+//       break;
+//     }
+//   }
+
 }
 
